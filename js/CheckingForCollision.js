@@ -15,10 +15,10 @@ var Tetris = (function(Collision) {
 	};
 
 	Collision.checkIfClear = () => {
-		debugger
+		
 		for (var i = 0; i < 4; i++) {
-			var xCoord = Tetris.whoseMove().me[i].x;
-			var yCoord = Tetris.whoseMove().me[i].y;
+			var xCoord = whoseMove.me[i].x;
+			var yCoord = whoseMove.me[i].y;
 
 		    xCoord = (xCoord/20) + 1;
 		    yCoord = (yCoord/20);
@@ -29,12 +29,18 @@ var Tetris = (function(Collision) {
 		    
 		    if (down === 1) {
 		    	collisionDown = true;
-		    } else if (right === 1) {
-		    	collisionDown = true;
-		    } else if (left === 1) {
-		    	collisionDown = true;
 		    } else {
 		    	collisionDown = false;
+		    };
+		    if (right === 1) {
+		    	collisionRight = true;
+		    } else {
+		    	collisionRight = false
+		    };
+		    if (left === 1) {
+		    	collisionLeft = true;
+		    } else {
+		    	collisionLeft = false;
 		    }
 		}
 	};
@@ -74,54 +80,6 @@ var Tetris = (function(Collision) {
 			}
 		}
 	};
-	// Collision.checkIfClearDown = () => {
-	// 	for (var i = 0; i < 4; i++) {
-	// 		var xCoord = whoseMove.me[i].x;
-	// 		var yCoord = whoseMove.me[i].y;
-	// 	    xCoord = (xCoord/20) + 1;
-	// 	    yCoord = (yCoord/20);
-		    
-	// 	    if (gameboard[yCoord + 1][xCoord] === 1) {
-	// 	    	collisionDown = true;
-	// 	    	return;
-	// 	    } else {
-	// 	    	collisionDown = false;
-	// 	    }
-	// 	}
-	// };
-
-	// Collision.checkIfClearRight = () => {
-	// 	for (var i = 0; i < 4; i++) {
-	// 		var xCoord = whoseMove.me[i].x;
-	// 		var yCoord = whoseMove.me[i].y;
-	// 	    xCoord = (xCoord/20) + 1;
-	// 	    yCoord = (yCoord/20);
-		    
-	// 	    if (gameboard[yCoord][xCoord + 1] === 1) {
-	// 	    	collisionRight = true;
-	// 	    	return;
-	// 	    } else {
-	// 	    	collisionRight = false;
-	// 	    }
-	// 	}
-	// };
-
-	// Collision.checkIfClearLeft = () => {
-	// 	for (var i = 0; i < 4; i++) {
-	// 		var xCoord = whoseMove.me[i].x;
-	// 		var yCoord = whoseMove.me[i].y;
-	// 	    xCoord = (xCoord/20) + 1;
-	// 	    yCoord = (yCoord/20);
-		    
-	// 	    if (gameboard[yCoord][xCoord - 1] === 1) {
-	// 	    	collisionLeft = true;
-	// 	    	return;
-	// 	    } else {
-	// 	    	collisionLeft = false;
-	// 	    }
-	// 	}
-	// };
-
 	
 	return Collision;
 

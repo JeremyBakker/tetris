@@ -13,19 +13,20 @@ var Tetris = (function(LoadJson) {
 	
 	LoadJson.loadPieces = function(fileName) {
 
-		let updateMySongData = songList => {
+		let updatePiecesData = piecesList => {
 			console.log("done loading ");
-			myData = songList;
+			myData = piecesList;
 			console.log(myData);
 		};
 
 		$.ajax({url:fileName})
-			.done(updateMySongData);
+			.done(updatePiecesData);
 
 	};
 
 	//Function to retrieve stored Json data
 	LoadJson.grabJson = () => myData;
+
 
 	return LoadJson;
 

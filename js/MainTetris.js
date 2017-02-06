@@ -7,15 +7,21 @@ var Tetris = (function(MainTetris) {
 	//===========FUNCTIONS=============//
 	//=================================//
 
-	let grabMove = {
-		me: square,
-		move: function(down) {Tetris.moveDown(down)},
-		string: "square",
-		color: "red",
-		position: 0
+	MainTetris.move = (direction) => {
+		for (var i = 0; i < whoseMove.me.length; i++) {
+			switch (direction) {
+					case "right": 
+						whoseMove.me[i].x += 20;
+						break;
+					case "left": 
+						whoseMove.me[i].x -= 20;
+						break;
+					case "down": 
+						whoseMove.me[i].y += 20;
+						break;
+				}
+		}
 	};
-
-	MainTetris.whoseMove = () => grabMove;
 
 	MainTetris.playGame = () => {
 	
@@ -44,38 +50,39 @@ var Tetris = (function(MainTetris) {
 	};
 
 	MainTetris.startOver = () => {
+		
 		let randomNum = Math.floor((Math.random() * 49) + 1);
-		let updateWhoseMove = (me, move, string, color, position) => {
-			Tetris.whoseMove().me = me;
-			Tetris.whoseMove().move = move;
-			Tetris.whoseMove().string = string;
-			Tetris.whoseMove().color = color;
-			Tetris.whoseMove().position = position;
+		let updateWhoseMove = (me, string, color, position) => {
+			whoseMove.me = me;
+			whoseMove.move = () => {Tetris.move("down")};
+			whoseMove.string = string;
+			whoseMove.color = color;
+			whoseMove.position = position;
 		};
 		
 		if (randomNum < 7) {
 			updateWhoseMove(square, moveDown, "square", "red", 0);
 		} else if (randomNum >= 7 && randomNum < 14) {
-			updateWhoseMove(I, moveDown, "I", "green", 1);
+			updateWhoseMove(I, "I", "green", 1);
 		} else if (randomNum >= 14 && randomNum < 21) {
-			updateWhoseMove(J, moveDown, "J", "cyan", 2);
+			updateWhoseMove(J, "J", "cyan", 2);
 		} else if (randomNum >= 21 && randomNum < 28) {
-			updateWhoseMove(L, moveDown, "L", "orange", 3);
+			updateWhoseMove(L, "L", "orange", 3);
 		} else if (randomNum >= 28 && randomNum < 35) {
-			updateWhoseMove(S, moveDown, "S", "yellow", 4);
+			updateWhoseMove(S, "S", "yellow", 4);
 		} else if (randomNum >= 35 && randomNum < 42) {
-			updateWhoseMove(T, moveDown, "T", "blue", 5);
+			updateWhoseMove(T, "T", "blue", 5);
 		} else if (randomNum >= 42 && randomNum <= 49) {
-			updateWhoseMove(Z, moveDown, "Z", pink, 6);
+			updateWhoseMove(Z, "Z", pink, 6);
 		}
 		moveCounter = 0;
 		waitTime = 500;
 	};
 
 	MainTetris.draw = () => {
-		ctx.fillStyle = Tetris.whoseMove().color;  
+		ctx.fillStyle = whoseMove.color;  
 		lastLetter = [];
-		var potato = Tetris.whoseMove().me
+		var potato = whoseMove.me
 		for (var i = 0; i < potato.length; i++) {
 		    ctx.fillRect(potato[i].x, potato[i].y, w, h);
 		    var potatoBox = {};
@@ -96,7 +103,7 @@ var Tetris = (function(MainTetris) {
 	};
 
 	MainTetris.createGamePiece = () => {
-		switch (Tetris.whoseMove().string) {
+		switch (whoseMove.string) {
 			case "square":
 				gameboard[0] = Tetris.grabJson().gameboardSquare[0];
 				gameboard[1] = Tetris.grabJson().gameboardSquare[1];
