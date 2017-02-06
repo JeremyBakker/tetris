@@ -1,4 +1,6 @@
 
+var scoreOutput = document.getElementById("scoreOutput");
+var playButton = document.getElementById("playButton");
 var canvas = document.getElementById('myCanvas'); // in your HTML this element appears as <canvas id="mycanvas"></canvas>
 var ctx = canvas.getContext('2d');
 var h = 19;
@@ -28,13 +30,13 @@ var moveCounter = 0;
 
 var occupiedX = [];
 
-var whoseMove = {
+var whoseMove = {};
+
+var whoseMove2 = {
 	me: square,
-	move: moveDown,
 	string: "square",
 	color: "red",
-	position: 0
-}
+};
 
 function draw() {
 	ctx.fillStyle = whoseMove.color;  
@@ -98,6 +100,8 @@ function playGame() {
 			draw();
 	}
 	myTimeout = setTimeout(function(){
+		scoreOutput.innerHTML = score;
+		clearedRowTotal = 0;
 		checkIfClearDown();
 		if (collisionDown === true && moveCounter < 2) {
 			alert("Game Over");
@@ -118,8 +122,8 @@ function playGame() {
 		clearToMove();
 		moveDown();
 		draw();
-		playGame();
 		moveGB();
+		playGame();
 	}, waitTime);
 }
 
@@ -208,50 +212,41 @@ document.addEventListener("keyup", function(event){
 	}
 });
 
+playButton.addEventListener('click', function() {
+	playGame();
+})
+
 function startOver() {
 	var randoNum = Math.floor((Math.random() * 49) + 1)
+	whoseMove = Object.assign({}, whoseMove2);
 	if (randoNum < 7) {
-		whoseMove.me = square;
-		whoseMove.move = moveDown;
-		whoseMove.string = "square";
-		whoseMove.color = "red";
-		whoseMove.position = 0;
+		whoseMove2.me = square;
+		whoseMove2.string = "square";
+		whoseMove2.color = "red";
 	} else if (randoNum >= 7 && randoNum < 14) {
-		whoseMove.me = I;
-		whoseMove.move = moveDown;
-		whoseMove.string = "I";
-		whoseMove.color = "green";
-		whoseMove.position = 1;
+		whoseMove2.me = I;
+		whoseMove2.string = "I";
+		whoseMove2.color = "green";
 	} else if (randoNum >= 14 && randoNum < 21) {
-		whoseMove.me = J;
-		whoseMove.move = moveDown;
-		whoseMove.string = "J";
-		whoseMove.color = "cyan";
-		whoseMove.position = 2;
+		whoseMove2.me = J;
+		whoseMove2.string = "J";
+		whoseMove2.color = "cyan";
 	} else if (randoNum >= 21 && randoNum < 28) {
-		whoseMove.me = L;
-		whoseMove.move = moveDown;
-		whoseMove.string = "L";
-		whoseMove.color = "orange";
-		whoseMove.position = 3;
+		whoseMove2.me = L;
+		whoseMove2.string = "L";
+		whoseMove2.color = "orange";
 	} else if (randoNum >= 28 && randoNum < 35) {
-		whoseMove.me = S;
-		whoseMove.move = moveDown;
-		whoseMove.string = "S";
-		whoseMove.color = "yellow";
-		whoseMove.position = 4;
+		whoseMove2.me = S;
+		whoseMove2.string = "S";
+		whoseMove2.color = "yellow";
 	} else if (randoNum >= 35 && randoNum < 42) {
-		whoseMove.me = T;
-		whoseMove.move = moveDown;
-		whoseMove.string = "T";
-		whoseMove.color = "blue";
-		whoseMove.position = 5;
+		whoseMove2.me = T;
+		whoseMove2.string = "T";
+		whoseMove2.color = "blue";
 	} else if (randoNum >= 42 && randoNum <= 49) {
-		whoseMove.me = Z;
-		whoseMove.move = moveDown;
-		whoseMove.string = "Z";
-		whoseMove.color = "pink";
-		whoseMove.position = 6;
+		whoseMove2.me = Z;
+		whoseMove2.string = "Z";
+		whoseMove2.color = "pink";
 	}
 	moveCounter = 0;
 	waitTime = 500;
@@ -453,12 +448,15 @@ function keepScore() {
 	}
 	if (clearedRowTotal === 2) {
 	    score += 100;
+	    score -= 40;
 	}
 	if (clearedRowTotal === 3) {
 	    score += 300;
+	    score -= 100;
 	}
 	if (clearedRowTotal === 4) {
 	    score += 1200;
+	    score -= 300;
 	}
 }
 
@@ -498,6 +496,7 @@ function letGBFall(rowNum) {
 }
 
 function createGamePiece() {
+	score += 4;
 	if (whoseMove.string === "square") {
 		gameboard[0] = originals.gameboardSquare[0];
 		gameboard[1] = originals.gameboardSquare[1];
@@ -846,6 +845,7 @@ var originals = {
 	]
 }
 
+startOver();
 startOver();
 
 
