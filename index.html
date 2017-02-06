@@ -3,12 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Tetris</title>
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+	<div id="scoreConsole">
+		<h1>Tetris</h1>
+		<p>&#8680; : move right</p>
+		<p>&#8678; : move left</p>
+		<p>&#8681; : move down</p>
+		<p>r : rotate right</p>
+		<p>w : rotate left</p>
+		<p> spacebar : hard drop</p>
+		<button id="playButton">Play!</button>
+	</div>
     <div id="canvasContainer">
         <canvas width="200px" height="440px" id="myCanvas"></canvas>
     </div>
+    <div id="score">
+    	<h3>Score</h3>
+    	<h4 id="scoreOutput">0</h4>
+    </div>
+    <audio controls loop autoplay hidden>
+		<source src="tetris.mp3" type="audio/mp3">
+	</audio>
     <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
