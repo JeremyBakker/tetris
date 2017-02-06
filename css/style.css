@@ -32,6 +32,7 @@ body {
 #scoreConsole h6 {
     margin: 0;
     margin-bottom: 15px;
+
 }
 
 #canvasContainer {
@@ -76,4 +77,5 @@ body {
     margin-top: 20px;
     padding-left: 30px;
     text-align: center;
+
 }

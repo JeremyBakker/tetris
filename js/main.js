@@ -1,4 +1,5 @@
 
+
 var scoreOutput = document.getElementById("scoreOutput");
 var playButton = document.getElementById("playButton");
 var stopButton = document.getElementById("stop-button");
@@ -229,6 +230,7 @@ function stop() {
     audioPlayer.pause();
     audioPlayer.currentTime = 0;
 }
+
 
 function startOver() {
 	var randoNum = Math.floor((Math.random() * 49) + 1)
@@ -483,6 +485,7 @@ function keepScore() {
 
 	if (score === 750) {
 		myTimeout = 50;
+
 	}
 }
 
@@ -882,7 +885,6 @@ var originals = {
 
 startOver();
 startOver();
-
 
 
 

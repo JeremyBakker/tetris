@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
 	<div id="tetris-game">
 	    <div id="scoreConsole">
 	        <h1>Tetris</h1>
@@ -31,7 +32,25 @@
 	    <audio controls loop autoplay hidden>
 	        <source src="tetris.mp3" type="audio/mp3">
 	    </audio>
+
     </div>
+
+    <div id="score">
+    	<h3>Score</h3>
+    	<h4 id="scoreOutput">0</h4>
+    </div>
+    <button id="playGame">Play!</button>
+    <audio controls autoplay hidden>
+  	    <source src="Tetris.mp3" type="audio/mpeg">
+    </audio>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/CheckingForCollision.js"></script>
+    <script type="text/javascript" src="js/Gameboard.js"></script>
+    <script type="text/javascript" src="js/LoadPieces.js"></script>
+    <script type="text/javascript" src="js/MainTetris.js"></script>
+    <script type="text/javascript" src="js/MoveTetris.js"></script>
+    <script type="text/javascript" src="js/NewPiece.js"></script>
+    <script type="text/javascript" src="js/Rotating.js"></script>
 </body>
 </html>
