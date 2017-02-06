@@ -7,18 +7,32 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<div id="scoreConsole">
-		<h1>Tetris</h1>
-		<p>&#8680; : move right</p>
-		<p>&#8678; : move left</p>
-		<p>&#8681; : move down</p>
-		<p>r : rotate right</p>
-		<p>w : rotate left</p>
-		<p> spacebar : hard drop</p>
-		<button id="playButton">Play!</button>
-	</div>
-    <div id="canvasContainer">
-        <canvas width="200px" height="440px" id="myCanvas"></canvas>
+
+	<div id="tetris-game">
+	    <div id="scoreConsole">
+	        <h1>Tetris</h1>
+	        <h6>Next Piece</h6>
+	        <canvas id="preview" width="100px" height="60px"></canvas>
+	        <p>&#8680; : move right</p>
+	        <p>&#8678; : move left</p>
+	        <p>&#8681; : move down</p>
+	        <p>r : rotate right</p>
+	        <p>w : rotate left</p>
+	        <p> spacebar : hard drop</p>
+	        <button id="playButton">Play!</button>
+	        <button id="stop-button">Mute!</button>
+	    </div>
+	    <div id="canvasContainer">
+	        <canvas width="200px" height="440px" id="myCanvas"></canvas>
+	    </div>
+	    <div id="score">
+	        <h3>Score</h3>
+	        <h4 id="scoreOutput">0</h4>
+	    </div>
+	    <audio controls loop autoplay hidden>
+	        <source src="tetris.mp3" type="audio/mp3">
+	    </audio>
+
     </div>
 
     <div id="score">

@@ -1,7 +1,13 @@
+
+
 var scoreOutput = document.getElementById("scoreOutput");
 var playButton = document.getElementById("playButton");
-var canvas = document.getElementById('myCanvas'); // in your HTML this element appears as <canvas id="mycanvas"></canvas>
+var stopButton = document.getElementById("stop-button");
+var canvas = document.getElementById('myCanvas'); 
+var canvasPreview = document.getElementById("preview"); 
+// in your HTML this element appears as <canvas id="mycanvas"></canvas>
 var ctx = canvas.getContext('2d');
+var ctxPreview = canvasPreview.getContext('2d');
 var h = 19;
 var w = 19;
 var score = 0;
@@ -212,7 +218,19 @@ document.addEventListener("keyup", function(event){
 
 playButton.addEventListener('click', function() {
 	playGame();
+	playButton.disabled = true;
 })
+
+stopButton.addEventListener('click', function() {
+	stop();
+})
+
+function stop() {
+    var audioPlayer = document.getElementsByTagName("audio")[0];
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0;
+}
+
 
 function startOver() {
 	var randoNum = Math.floor((Math.random() * 49) + 1)
@@ -456,6 +474,19 @@ function keepScore() {
 	    score += 1200;
 	    score -= 300;
 	}
+
+	if (score === 250) {
+		myTimeout = 250;
+	}
+
+	if (score === 500) {
+		myTimeout = 125;
+	}
+
+	if (score === 750) {
+		myTimeout = 50;
+
+	}
 }
 
 function letGBFall(rowNum) {
@@ -494,6 +525,14 @@ function letGBFall(rowNum) {
 }
 
 function createGamePiece() {
+	ctxPreview.clearRect(0, 0, 100, 60);
+	ctxPreview.fillStyle = whoseMove2.color;  
+	potato = whoseMove2.me;
+	for (var i = 0; i < potato.length; i++) {
+		var newXCord = ((Number(potato[i].x)/20) - 2)
+		newXCord = newXCord * 20;
+	    ctxPreview.fillRect(newXCord, potato[i].y, w, h);
+	}
 	score += 4;
 	scoreOutput.innerHTML = score;
 	if (whoseMove.string === "square") {
@@ -846,6 +885,7 @@ var originals = {
 
 startOver();
 startOver();
+
 
 
 
