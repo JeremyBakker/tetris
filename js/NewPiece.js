@@ -8,27 +8,35 @@ var Tetris = (function(NewPiece) {
 	//=================================//
 
 	NewPiece.resetLetter = () => {
-		let shapeReset = (shape) => {
-			for (var i = 0; i < square.length; i++) {
-				shape[i].x = Number(Tetris.grabJson().shape[i].x);
-				shape[i].y = Number(Tetris.grabJson().shape[i].y);
+		let shapeReset = (shape, shapeToIterate) => {
+			for (var i = 0; i < 4; i++) {
+				console.log(Number(Tetris.grabJson()[shapeToIterate][i].x));
+				shape[i].x = Number(Tetris.grabJson()[shapeToIterate][i].x);
+				shape[i].y = Number(Tetris.grabJson()[shapeToIterate][i].y);
 			}
 		};
-		switch (Tetris.whoseMove().string) {
+		switch (whoseMove.string) {
 			case "square": 
-				shapeReset(square);
+				shapeReset(square, "square");
+				break;
 			case "L": 
-				shapeReset(L);
+				shapeReset(L, "L");
+				break;
 			case "J": 
-				shapeReset(J);
+				shapeReset(J, "J");
+				break;
 			case "Z": 
-				shapeReset(Z);
+				shapeReset(Z, "Z");
+				break;
 			case "S":
-				shapeReset(S);
+				shapeReset(S, "S");
+				break;
 			case "I":
-				shapeReset(I);
+				shapeReset(I, "I");
+				break;
 			case "T":
-				shapeReset(T);
+				shapeReset(T, "T");
+				break;
 		}
 	};
 
