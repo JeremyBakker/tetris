@@ -3,6 +3,8 @@ var canvas = document.getElementById('myCanvas'); // in your HTML this element a
 var ctx = canvas.getContext('2d');
 var h = 19;
 var w = 19;
+var score = 0;
+var clearedRowTotal = 0;
 var waitTime = 500;
 var letterColor = {
 	square: "red",
@@ -436,6 +438,8 @@ function checkIfRowIsFull() {
 				fullRow.push(n);
 			}
 			if (fullRow.length === 12) {
+				clearedRowTotal++;
+				keepScore();
 				letGBFall(i);
 				console.log("row " + i + " is full");
 			}
@@ -443,14 +447,29 @@ function checkIfRowIsFull() {
 	}
 }
 
+function keepScore() {
+	if (clearedRowTotal === 1) {
+	    score += 40;
+	}
+	if (clearedRowTotal === 2) {
+	    score += 100;
+	}
+	if (clearedRowTotal === 3) {
+	    score += 300;
+	}
+	if (clearedRowTotal === 4) {
+	    score += 1200;
+	}
+}
+
 function letGBFall(rowNum) {
 	var yCoordinates = rowNum * 20;
 	ctx.clearRect(0, yCoordinates, 200, h);
 	for (var n = rowNum; n > 0; n--) {
-		for (var p = 1; p < 12; p++) {
+		for (var p = 1; p < 11; p++) {
 			if (gameboard[n - 1][p] === 1) {
-				var xCos = p * 20;
-				var yCos = (n - 1) * 20;
+				var xCos = (p - 1) * 20;
+				var yCos = n * 20;
 				var randoNum = Math.floor((Math.random() * 49) + 1)
 				if (randoNum < 7) {
 					ctx.fillStyle = "red";
@@ -464,12 +483,14 @@ function letGBFall(rowNum) {
 					ctx.fillStyle = "green";
 				} else if (randoNum >= 35 && randoNum < 42) {
 					ctx.fillStyle = "orange";
-				} else if (randoNum >= 42 && randoNum < 49) {
+				} else if (randoNum >= 42 && randoNum <= 49) {
 					ctx.fillStyle = "cyan";
 				}
 				ctx.fillRect(xCos, yCos, w, h);
 			}
 		}
+		yCoordinates = (n - 1) * 20;
+		ctx.clearRect(0, yCoordinates, 200, h);
 	}
 	for (var i = rowNum; i > 0; i--) {
 		gameboard[i] = gameboard[i - 1];
