@@ -117,14 +117,32 @@ function playGame() {
 		moveDown();
 		draw();
 		playGame();
-		moveGBDown();
+		moveGB();
 	}, waitTime);
 }
 
 document.addEventListener("keyup", function(event){
+	if (event.which === 40) {
+		// down arrow
+		checkIfClearDown();
+		if (collisionDown === true){
+			return;
+		}
+		moveCounter++;
+		clearBeforeMoveGB();
+		clearToMove();
+		moveDown();
+		draw();
+		moveGB();
+	}
+
 	if(event.which === 82) {
 		// r button
-		if (moveCounter < 2) {
+		if (whoseMove.string === "square") {
+        return;
+    	}
+
+		if (moveCounter < 1) {
 			return;
 		}
 		checkIfClearRotateRight();
@@ -135,11 +153,15 @@ document.addEventListener("keyup", function(event){
 		clearToMove();
 		rotateRight();
 		draw();
-		rotateGBRight();
+		moveGB();
 	}
 	if(event.which === 87) {
 		// w button
-		if (moveCounter < 2) {
+		if (whoseMove.string === "square") {
+        return;
+    	}
+
+		if (moveCounter < 1) {
 			return;
 		}
 		checkIfClearRotateLeft();
@@ -150,7 +172,7 @@ document.addEventListener("keyup", function(event){
 		clearToMove();
 		rotateLeft();
 		draw();
-		rotateGBLeft();
+		moveGB();
 	}
 	if(event.which === 32) {
 		// space
@@ -166,7 +188,7 @@ document.addEventListener("keyup", function(event){
 		clearToMove();
 		moveRight();
 		draw();
-		moveGBRight();
+		moveGB();
 		}
 	}
 	if (event.which === 37) {
@@ -179,7 +201,7 @@ document.addEventListener("keyup", function(event){
 		clearToMove();
 		moveLeft();
 		draw();
-		moveGBLeft();
+		moveGB();
 		}
 	}
 });
@@ -385,51 +407,7 @@ function clearBeforeMoveGB() {
 	}
 }
 
-function moveGBDown () {
-	for (var i = 3; i >= 0; i--) {
-		var xCoord = lastLetter[i].x
-		var yCoord = lastLetter[i].y
-	    xCoord = (xCoord/20) + 1;
-	    yCoord = (yCoord/20);
-	    
-	    gameboard[yCoord][xCoord] = 2;
-	}
-}
-
-function moveGBLeft () {
-	for (var i = 3; i >= 0; i--) {
-		var xCoord = lastLetter[i].x
-		var yCoord = lastLetter[i].y
-	    xCoord = (xCoord/20) + 1;
-	    yCoord = (yCoord/20);
-	    
-	    gameboard[yCoord][xCoord] = 2;
-	}
-}
-
-function moveGBRight () {
-	for (var i = 3; i >= 0; i--) {
-		var xCoord = lastLetter[i].x
-		var yCoord = lastLetter[i].y
-	    xCoord = (xCoord/20) + 1;
-	    yCoord = (yCoord/20);
-	    
-	    gameboard[yCoord][xCoord] = 2;
-	}
-}
-
-function rotateGBRight() {
-	for (var i = 3; i >= 0; i--) {
-		var xCoord = lastLetter[i].x
-		var yCoord = lastLetter[i].y
-	    xCoord = (xCoord/20) + 1;
-	    yCoord = (yCoord/20);
-	    
-	    gameboard[yCoord][xCoord] = 2;
-	}
-}
-
-function rotateGBLeft() {
+function moveGB () {
 	for (var i = 3; i >= 0; i--) {
 		var xCoord = lastLetter[i].x
 		var yCoord = lastLetter[i].y
@@ -458,10 +436,44 @@ function checkIfRowIsFull() {
 				fullRow.push(n);
 			}
 			if (fullRow.length === 12) {
+				letGBFall(i);
 				console.log("row " + i + " is full");
 			}
 		}
 	}
+}
+
+function letGBFall(rowNum) {
+	var yCoordinates = rowNum * 20;
+	ctx.clearRect(0, yCoordinates, 200, h);
+	for (var n = rowNum; n > 0; n--) {
+		for (var p = 1; p < 12; p++) {
+			if (gameboard[n - 1][p] === 1) {
+				var xCos = p * 20;
+				var yCos = (n - 1) * 20;
+				var randoNum = Math.floor((Math.random() * 49) + 1)
+				if (randoNum < 7) {
+					ctx.fillStyle = "red";
+				} else if (randoNum >= 7 && randoNum < 14) {
+					ctx.fillStyle = "blue";
+				} else if (randoNum >= 14 && randoNum < 21) {
+					ctx.fillStyle = "yellow";
+				} else if (randoNum >= 21 && randoNum < 28) {
+					ctx.fillStyle = "pink";
+				} else if (randoNum >= 28 && randoNum < 35) {
+					ctx.fillStyle = "green";
+				} else if (randoNum >= 35 && randoNum < 42) {
+					ctx.fillStyle = "orange";
+				} else if (randoNum >= 42 && randoNum < 49) {
+					ctx.fillStyle = "cyan";
+				}
+				ctx.fillRect(xCos, yCos, w, h);
+			}
+		}
+	}
+	for (var i = rowNum; i > 0; i--) {
+		gameboard[i] = gameboard[i - 1];
+	} 
 }
 
 function createGamePiece() {
