@@ -550,19 +550,19 @@ var gameboard = [
 
 var I = [
 
-	boxA1 = {
+	boxB1 = {
 		x: 60,
 		y: 20
 	},
-	boxA2 = {
+	boxB2 = {
 		x: 80,
 		y: 20
 	},
-	boxA3 = {
+	boxB3 = {
 		x: 100,
 		y: 20
 	},
-	boxA4 = {
+	boxB4 = {
 		x: 120,
 		y: 20
 	}
@@ -594,12 +594,12 @@ var L = [
 		x: 100,
 		y: 0
 	},
-	boxB2 = {
-		x: 60,
-		y: 20
-	},
 	boxB3 = {
 		x: 80,
+		y: 20
+	},
+	boxB2 = {
+		x: 60,
 		y: 20
 	},
 	boxB4 = {
@@ -635,16 +635,16 @@ var S = [
 		x: 80,
 		y: 0
 	},
+	boxB3 = {
+		x: 80,
+		y: 20
+	},
 	boxA4 = {
 		x: 100,
 		y: 0
 	},
 	boxB2 = {
 		x: 60,
-		y: 20
-	},
-	boxB3 = {
-		x: 80,
 		y: 20
 	}
 ]
@@ -655,6 +655,10 @@ var T = [
 		x: 60,
 		y: 0
 	},
+	boxB3 = {
+		x: 80,
+		y: 20
+	},
 	boxA3 = {
 		x: 80,
 		y: 0
@@ -662,10 +666,6 @@ var T = [
 	boxA4 = {
 		x: 100,
 		y: 0
-	},
-	boxB3 = {
-		x: 80,
-		y: 20
 	}
 ]
 
@@ -675,13 +675,13 @@ var Z = [
 		x: 60,
 		y: 0
 	},
-	boxA3 = {
-		x: 80,
-		y: 0
-	},
 	boxB3 = {
 		x: 80,
 		y: 20
+	},
+	boxA3 = {
+		x: 80,
+		y: 0
 	},
 	boxB4 = {
 		x: 100,
@@ -777,12 +777,12 @@ var originals = {
 			x: 100,
 			y: 0
 		},
-		boxB2 = {
-			x: 60,
-			y: 20
-		},
 		boxB3 = {
 			x: 80,
+			y: 20
+		},
+		boxB2 = {
+			x: 60,
 			y: 20
 		},
 		boxB4 = {
@@ -795,16 +795,16 @@ var originals = {
 			x: 80,
 			y: 0
 		},
+		boxB3 = {
+			x: 80,
+			y: 20
+		},
 		boxA4 = {
 			x: 100,
 			y: 0
 		},
 		boxB2 = {
 			x: 60,
-			y: 20
-		},
-		boxB3 = {
-			x: 80,
 			y: 20
 		}
 	],
@@ -813,6 +813,10 @@ var originals = {
 			x: 60,
 			y: 0
 		},
+		boxB3 = {
+			x: 80,
+			y: 20
+		},
 		boxA3 = {
 			x: 80,
 			y: 0
@@ -820,10 +824,6 @@ var originals = {
 		boxA4 = {
 			x: 100,
 			y: 0
-		},
-		boxB3 = {
-			x: 80,
-			y: 20
 		}
 	],
 	Z: [
@@ -831,13 +831,13 @@ var originals = {
 			x: 60,
 			y: 0
 		},
-		boxA3 = {
-			x: 80,
-			y: 0
-		},
 		boxB3 = {
 			x: 80,
 			y: 20
+		},
+		boxA3 = {
+			x: 80,
+			y: 0
 		},
 		boxB4 = {
 			x: 100,
