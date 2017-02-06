@@ -121,13 +121,7 @@ function playGame() {
 	}, waitTime);
 }
 
-document.getElementById("playGame").addEventListener("click", playGame);
-
 document.addEventListener("keyup", function(event){
-	if (event.which === 40) {
-		// down arrow
-		moveDown();
-	}
 	if(event.which === 82) {
 		// r button
 		if (moveCounter < 2) {
@@ -465,9 +459,6 @@ function checkIfRowIsFull() {
 			}
 			if (fullRow.length === 12) {
 				console.log("row " + i + " is full");
-				// for var (x = 0; x < gameboard.length; x++) {
-
-				// }
 			}
 		}
 	}
@@ -526,143 +517,143 @@ var gameboard = [
 
 var I = [
 
-    boxA1 = {
-        x: 60,
-        y: 20
-    },
-    boxA2 = {
-        x: 80,
-        y: 20
-    },
-    boxA3 = {
-        x: 100,
-        y: 20
-    },
-    boxA4 = {
-        x: 120,
-        y: 20
-    }
+	boxA1 = {
+		x: 60,
+		y: 20
+	},
+	boxA2 = {
+		x: 80,
+		y: 20
+	},
+	boxA3 = {
+		x: 100,
+		y: 20
+	},
+	boxA4 = {
+		x: 120,
+		y: 20
+	}
 ]
 
 var J = [
 
-    boxA2 = {
-        x: 60,
-        y: 0
-    },
-    boxA3 = {
-        x: 80,
-        y: 0
-    },
-    boxA4 = {
-        x: 100,
-        y: 0
-    },
-    boxB4 = {
-        x: 100,
-        y: 20
-    }
+	boxA2 = {
+		x: 60,
+		y: 0
+	},
+	boxA3 = {
+		x: 80,
+		y: 0
+	},
+	boxA4 = {
+		x: 100,
+		y: 0
+	},
+	boxB4 = {
+		x: 100,
+		y: 20
+	}
 ]
 
 var L = [
 
-    boxA4 = {
-        x: 100,
-        y: 0
-    },
-    boxB3 = {
-        x: 80,
-        y: 20
-    },
-    boxB2 = {
-        x: 60,
-        y: 20
-    },
-    boxB4 = {
-        x: 100,
-        y: 20
-    }
-    
+	boxA4 = {
+		x: 100,
+		y: 0
+	},
+	boxB2 = {
+		x: 60,
+		y: 20
+	},
+	boxB3 = {
+		x: 80,
+		y: 20
+	},
+	boxB4 = {
+		x: 100,
+		y: 20
+	}
+	
 ]
 
 var square = [
 
-    boxA2 = {
-        x: 80,
-        y: 0
-    },
-    boxB3 = {
-        x: 100,
-        y: 20
-    },
-    boxA3 = {
-        x: 100,
-        y: 0
-    },
-    boxB2 = {
-        x: 80,
-        y: 20
-    }
+	boxA2 = {
+		x: 80,
+		y: 0
+	},
+	boxA3 = {
+		x: 100,
+		y: 0
+	},
+	boxB2 = {
+		x: 80,
+		y: 20
+	},
+	boxB3 = {
+		x: 100,
+		y: 20
+	}
 ]
 
 var S = [
 
-    boxA3 = {
-        x: 80,
-        y: 0
-    },
-    boxB3 = {
-        x: 80,
-        y: 20
-    },
-    boxA4 = {
-        x: 100,
-        y: 0
-    },
-    boxB2 = {
-        x: 60,
-        y: 20
-    }
+	boxA3 = {
+		x: 80,
+		y: 0
+	},
+	boxA4 = {
+		x: 100,
+		y: 0
+	},
+	boxB2 = {
+		x: 60,
+		y: 20
+	},
+	boxB3 = {
+		x: 80,
+		y: 20
+	}
 ]
 
 var T = [
 
-    boxA2 = {
-        x: 60,
-        y: 0
-    },
-    boxB3 = {
-        x: 80,
-        y: 20
-    },
-    boxA3 = {
-        x: 80,
-        y: 0
-    },
-    boxA4 = {
-        x: 100,
-        y: 0
-    }
+	boxA2 = {
+		x: 60,
+		y: 0
+	},
+	boxA3 = {
+		x: 80,
+		y: 0
+	},
+	boxA4 = {
+		x: 100,
+		y: 0
+	},
+	boxB3 = {
+		x: 80,
+		y: 20
+	}
 ]
 
 var Z = [
 
-    boxA2 = {
-        x: 60,
-        y: 0
-    },
-    boxB3 = {
-        x: 80,
-        y: 20
-    },
-    boxA3 = {
-        x: 80,
-        y: 0
-    },
-    boxB4 = {
-        x: 100,
-        y: 20
-    }
+	boxA2 = {
+		x: 60,
+		y: 0
+	},
+	boxA3 = {
+		x: 80,
+		y: 0
+	},
+	boxB3 = {
+		x: 80,
+		y: 20
+	},
+	boxB4 = {
+		x: 100,
+		y: 20
+	}
 ]
 
 var originals = {
@@ -753,12 +744,12 @@ var originals = {
 			x: 100,
 			y: 0
 		},
-		boxB3 = {
-			x: 80,
-			y: 20
-		},
 		boxB2 = {
 			x: 60,
+			y: 20
+		},
+		boxB3 = {
+			x: 80,
 			y: 20
 		},
 		boxB4 = {
@@ -771,16 +762,16 @@ var originals = {
 			x: 80,
 			y: 0
 		},
-		boxB3 = {
-			x: 80,
-			y: 20
-		},
 		boxA4 = {
 			x: 100,
 			y: 0
 		},
 		boxB2 = {
 			x: 60,
+			y: 20
+		},
+		boxB3 = {
+			x: 80,
 			y: 20
 		}
 	],
@@ -789,10 +780,6 @@ var originals = {
 			x: 60,
 			y: 0
 		},
-		boxB3 = {
-			x: 80,
-			y: 20
-		},
 		boxA3 = {
 			x: 80,
 			y: 0
@@ -800,6 +787,10 @@ var originals = {
 		boxA4 = {
 			x: 100,
 			y: 0
+		},
+		boxB3 = {
+			x: 80,
+			y: 20
 		}
 	],
 	Z: [
@@ -807,13 +798,13 @@ var originals = {
 			x: 60,
 			y: 0
 		},
-		boxB3 = {
-			x: 80,
-			y: 20
-		},
 		boxA3 = {
 			x: 80,
 			y: 0
+		},
+		boxB3 = {
+			x: 80,
+			y: 20
 		},
 		boxB4 = {
 			x: 100,
@@ -823,5 +814,9 @@ var originals = {
 }
 
 startOver();
+
+
+
+
 
 
