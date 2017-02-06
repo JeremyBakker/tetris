@@ -100,7 +100,6 @@ function playGame() {
 			draw();
 	}
 	myTimeout = setTimeout(function(){
-		scoreOutput.innerHTML = score;
 		clearedRowTotal = 0;
 		checkIfClearDown();
 		if (collisionDown === true && moveCounter < 2) {
@@ -214,6 +213,7 @@ document.addEventListener("keyup", function(event){
 
 playButton.addEventListener('click', function() {
 	playGame();
+	playButton.disabled = true;
 })
 
 function startOver() {
@@ -497,6 +497,7 @@ function letGBFall(rowNum) {
 
 function createGamePiece() {
 	score += 4;
+	scoreOutput.innerHTML = score;
 	if (whoseMove.string === "square") {
 		gameboard[0] = originals.gameboardSquare[0];
 		gameboard[1] = originals.gameboardSquare[1];

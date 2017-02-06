@@ -1,13 +1,61 @@
-body {
-    height: 100%;
-    width: 100%
+* {
+    font-family: 'Press Start 2P', cursive;
 }
 
-#canvasContainer {
-    width: 200px;
+body {
+    position: relative;
+}
+
+#tetris-game {
+    width: 450px;
     margin: 0 auto;
 }
 
+#scoreConsole {
+    /*margin-left: 35%;*/
+    margin-top: 40px;
+    margin-right: 20px;
+    display: inline-block;
+    border: 5px solid black;
+    text-align: center;
+    width: 200px;
+    height: 440px;
+    left: 30%;
+    float: left;
+}
+
+#scoreConsole p {
+    font-size: 0.5em;
+}
+
+#canvasContainer {
+    margin-top: 40px;
+    display: inline-block;
+    width: 200px;
+    height: 440px;
+    left: 50%;
+}
+
 #myCanvas {
-	border: 2px solid black;
+    border: 5px solid black;
+}
+
+#playButton {
+    border: solid 2px black;
+    background-color: lightgrey;
+    border-radius: 5px;
+    width: 100px;
+    display: block;
+    margin: auto;
+    text-align: center;
+    font-size: 1em;
+    margin-top: 1em;
+}
+
+#score {
+    border: 5px solid black;
+    width: 400px;
+    margin-top: 20px;
+    padding-left: 30px;
+    text-align: center;
 }
