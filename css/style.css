@@ -25,7 +25,13 @@ body {
 }
 
 #scoreConsole p {
-    font-size: 0.5em;
+    font-size: 0.8em;
+    margin: 2px;
+}
+
+#scoreConsole h6 {
+    margin: 0;
+    margin-bottom: 15px;
 }
 
 #canvasContainer {
@@ -50,6 +56,18 @@ body {
     text-align: center;
     font-size: 1em;
     margin-top: 1em;
+}
+
+#stop-button {
+    border: solid 2px black;
+    background-color: lightgrey;
+    border-radius: 5px;
+    width: 100px;
+    display: block;
+    margin: auto;
+    margin-top: 5px;
+    text-align: center;
+    font-size: 1em;
 }
 
 #score {
