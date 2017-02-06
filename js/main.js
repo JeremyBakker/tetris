@@ -472,6 +472,18 @@ function keepScore() {
 	    score += 1200;
 	    score -= 300;
 	}
+
+	if (score === 250) {
+		myTimeout = 250;
+	}
+
+	if (score === 500) {
+		myTimeout = 125;
+	}
+
+	if (score === 750) {
+		myTimeout = 50;
+	}
 }
 
 function letGBFall(rowNum) {
