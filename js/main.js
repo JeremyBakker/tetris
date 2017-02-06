@@ -1,8 +1,11 @@
-
+var scoreOutput = document.getElementById("scoreOutput");
+var playButton = document.getElementById("playButton");
 var canvas = document.getElementById('myCanvas'); // in your HTML this element appears as <canvas id="mycanvas"></canvas>
 var ctx = canvas.getContext('2d');
 var h = 19;
 var w = 19;
+var score = 0;
+var clearedRowTotal = 0;
 var waitTime = 500;
 var letterColor = {
 	square: "red",
@@ -26,13 +29,13 @@ var moveCounter = 0;
 
 var occupiedX = [];
 
-var whoseMove = {
+var whoseMove = {};
+
+var whoseMove2 = {
 	me: square,
-	move: moveDown,
 	string: "square",
 	color: "red",
-	position: 0
-}
+};
 
 function draw() {
 	ctx.fillStyle = whoseMove.color;  
@@ -96,6 +99,7 @@ function playGame() {
 			draw();
 	}
 	myTimeout = setTimeout(function(){
+		clearedRowTotal = 0;
 		checkIfClearDown();
 		if (collisionDown === true && moveCounter < 2) {
 			alert("Game Over");
@@ -116,21 +120,33 @@ function playGame() {
 		clearToMove();
 		moveDown();
 		draw();
+		moveGB();
 		playGame();
-		moveGBDown();
 	}, waitTime);
 }
-
-document.getElementById("playGame").addEventListener("click", playGame);
 
 document.addEventListener("keyup", function(event){
 	if (event.which === 40) {
 		// down arrow
+		checkIfClearDown();
+		if (collisionDown === true){
+			return;
+		}
+		moveCounter++;
+		clearBeforeMoveGB();
+		clearToMove();
 		moveDown();
+		draw();
+		moveGB();
 	}
+
 	if(event.which === 82) {
 		// r button
-		if (moveCounter < 2) {
+		if (whoseMove.string === "square") {
+        return;
+    	}
+
+		if (moveCounter < 1) {
 			return;
 		}
 		checkIfClearRotateRight();
@@ -141,11 +157,15 @@ document.addEventListener("keyup", function(event){
 		clearToMove();
 		rotateRight();
 		draw();
-		rotateGBRight();
+		moveGB();
 	}
 	if(event.which === 87) {
 		// w button
-		if (moveCounter < 2) {
+		if (whoseMove.string === "square") {
+        return;
+    	}
+
+		if (moveCounter < 1) {
 			return;
 		}
 		checkIfClearRotateLeft();
@@ -156,7 +176,7 @@ document.addEventListener("keyup", function(event){
 		clearToMove();
 		rotateLeft();
 		draw();
-		rotateGBLeft();
+		moveGB();
 	}
 	if(event.which === 32) {
 		// space
@@ -172,7 +192,7 @@ document.addEventListener("keyup", function(event){
 		clearToMove();
 		moveRight();
 		draw();
-		moveGBRight();
+		moveGB();
 		}
 	}
 	if (event.which === 37) {
@@ -185,55 +205,46 @@ document.addEventListener("keyup", function(event){
 		clearToMove();
 		moveLeft();
 		draw();
-		moveGBLeft();
+		moveGB();
 		}
 	}
 });
 
+playButton.addEventListener('click', function() {
+	playGame();
+})
+
 function startOver() {
 	var randoNum = Math.floor((Math.random() * 49) + 1)
+	whoseMove = Object.assign({}, whoseMove2);
 	if (randoNum < 7) {
-		whoseMove.me = square;
-		whoseMove.move = moveDown;
-		whoseMove.string = "square";
-		whoseMove.color = "red";
-		whoseMove.position = 0;
+		whoseMove2.me = square;
+		whoseMove2.string = "square";
+		whoseMove2.color = "red";
 	} else if (randoNum >= 7 && randoNum < 14) {
-		whoseMove.me = I;
-		whoseMove.move = moveDown;
-		whoseMove.string = "I";
-		whoseMove.color = "green";
-		whoseMove.position = 1;
+		whoseMove2.me = I;
+		whoseMove2.string = "I";
+		whoseMove2.color = "green";
 	} else if (randoNum >= 14 && randoNum < 21) {
-		whoseMove.me = J;
-		whoseMove.move = moveDown;
-		whoseMove.string = "J";
-		whoseMove.color = "cyan";
-		whoseMove.position = 2;
+		whoseMove2.me = J;
+		whoseMove2.string = "J";
+		whoseMove2.color = "cyan";
 	} else if (randoNum >= 21 && randoNum < 28) {
-		whoseMove.me = L;
-		whoseMove.move = moveDown;
-		whoseMove.string = "L";
-		whoseMove.color = "orange";
-		whoseMove.position = 3;
+		whoseMove2.me = L;
+		whoseMove2.string = "L";
+		whoseMove2.color = "orange";
 	} else if (randoNum >= 28 && randoNum < 35) {
-		whoseMove.me = S;
-		whoseMove.move = moveDown;
-		whoseMove.string = "S";
-		whoseMove.color = "yellow";
-		whoseMove.position = 4;
+		whoseMove2.me = S;
+		whoseMove2.string = "S";
+		whoseMove2.color = "yellow";
 	} else if (randoNum >= 35 && randoNum < 42) {
-		whoseMove.me = T;
-		whoseMove.move = moveDown;
-		whoseMove.string = "T";
-		whoseMove.color = "blue";
-		whoseMove.position = 5;
+		whoseMove2.me = T;
+		whoseMove2.string = "T";
+		whoseMove2.color = "blue";
 	} else if (randoNum >= 42 && randoNum <= 49) {
-		whoseMove.me = Z;
-		whoseMove.move = moveDown;
-		whoseMove.string = "Z";
-		whoseMove.color = "pink";
-		whoseMove.position = 6;
+		whoseMove2.me = Z;
+		whoseMove2.string = "Z";
+		whoseMove2.color = "pink";
 	}
 	moveCounter = 0;
 	waitTime = 500;
@@ -391,51 +402,7 @@ function clearBeforeMoveGB() {
 	}
 }
 
-function moveGBDown () {
-	for (var i = 3; i >= 0; i--) {
-		var xCoord = lastLetter[i].x
-		var yCoord = lastLetter[i].y
-	    xCoord = (xCoord/20) + 1;
-	    yCoord = (yCoord/20);
-	    
-	    gameboard[yCoord][xCoord] = 2;
-	}
-}
-
-function moveGBLeft () {
-	for (var i = 3; i >= 0; i--) {
-		var xCoord = lastLetter[i].x
-		var yCoord = lastLetter[i].y
-	    xCoord = (xCoord/20) + 1;
-	    yCoord = (yCoord/20);
-	    
-	    gameboard[yCoord][xCoord] = 2;
-	}
-}
-
-function moveGBRight () {
-	for (var i = 3; i >= 0; i--) {
-		var xCoord = lastLetter[i].x
-		var yCoord = lastLetter[i].y
-	    xCoord = (xCoord/20) + 1;
-	    yCoord = (yCoord/20);
-	    
-	    gameboard[yCoord][xCoord] = 2;
-	}
-}
-
-function rotateGBRight() {
-	for (var i = 3; i >= 0; i--) {
-		var xCoord = lastLetter[i].x
-		var yCoord = lastLetter[i].y
-	    xCoord = (xCoord/20) + 1;
-	    yCoord = (yCoord/20);
-	    
-	    gameboard[yCoord][xCoord] = 2;
-	}
-}
-
-function rotateGBLeft() {
+function moveGB () {
 	for (var i = 3; i >= 0; i--) {
 		var xCoord = lastLetter[i].x
 		var yCoord = lastLetter[i].y
@@ -464,16 +431,71 @@ function checkIfRowIsFull() {
 				fullRow.push(n);
 			}
 			if (fullRow.length === 12) {
+				clearedRowTotal++;
+				keepScore();
+				letGBFall(i);
 				console.log("row " + i + " is full");
-				// for var (x = 0; x < gameboard.length; x++) {
-
-				// }
 			}
 		}
 	}
 }
 
+function keepScore() {
+	if (clearedRowTotal === 1) {
+	    score += 40;
+	}
+	if (clearedRowTotal === 2) {
+	    score += 100;
+	    score -= 40;
+	}
+	if (clearedRowTotal === 3) {
+	    score += 300;
+	    score -= 100;
+	}
+	if (clearedRowTotal === 4) {
+	    score += 1200;
+	    score -= 300;
+	}
+}
+
+function letGBFall(rowNum) {
+	var yCoordinates = rowNum * 20;
+	ctx.clearRect(0, yCoordinates, 200, h);
+	for (var n = rowNum; n > 0; n--) {
+		for (var p = 1; p < 11; p++) {
+			if (gameboard[n - 1][p] === 1) {
+				var xCos = (p - 1) * 20;
+				var yCos = n * 20;
+				var randoNum = Math.floor((Math.random() * 49) + 1)
+				if (randoNum < 7) {
+					ctx.fillStyle = "red";
+				} else if (randoNum >= 7 && randoNum < 14) {
+					ctx.fillStyle = "blue";
+				} else if (randoNum >= 14 && randoNum < 21) {
+					ctx.fillStyle = "yellow";
+				} else if (randoNum >= 21 && randoNum < 28) {
+					ctx.fillStyle = "pink";
+				} else if (randoNum >= 28 && randoNum < 35) {
+					ctx.fillStyle = "green";
+				} else if (randoNum >= 35 && randoNum < 42) {
+					ctx.fillStyle = "orange";
+				} else if (randoNum >= 42 && randoNum <= 49) {
+					ctx.fillStyle = "cyan";
+				}
+				ctx.fillRect(xCos, yCos, w, h);
+			}
+		}
+		yCoordinates = (n - 1) * 20;
+		ctx.clearRect(0, yCoordinates, 200, h);
+	}
+	for (var i = rowNum; i > 0; i--) {
+		gameboard[i] = gameboard[i - 1];
+	} 
+}
+
 function createGamePiece() {
+	score += 4;
+	scoreOutput.innerHTML = score;
 	if (whoseMove.string === "square") {
 		gameboard[0] = originals.gameboardSquare[0];
 		gameboard[1] = originals.gameboardSquare[1];
@@ -526,143 +548,143 @@ var gameboard = [
 
 var I = [
 
-    boxA1 = {
-        x: 60,
-        y: 20
-    },
-    boxA2 = {
-        x: 80,
-        y: 20
-    },
-    boxA3 = {
-        x: 100,
-        y: 20
-    },
-    boxA4 = {
-        x: 120,
-        y: 20
-    }
+	boxB1 = {
+		x: 60,
+		y: 20
+	},
+	boxB2 = {
+		x: 80,
+		y: 20
+	},
+	boxB3 = {
+		x: 100,
+		y: 20
+	},
+	boxB4 = {
+		x: 120,
+		y: 20
+	}
 ]
 
 var J = [
 
-    boxA2 = {
-        x: 60,
-        y: 0
-    },
-    boxA3 = {
-        x: 80,
-        y: 0
-    },
-    boxA4 = {
-        x: 100,
-        y: 0
-    },
-    boxB4 = {
-        x: 100,
-        y: 20
-    }
+	boxA2 = {
+		x: 60,
+		y: 0
+	},
+	boxA3 = {
+		x: 80,
+		y: 0
+	},
+	boxA4 = {
+		x: 100,
+		y: 0
+	},
+	boxB4 = {
+		x: 100,
+		y: 20
+	}
 ]
 
 var L = [
 
-    boxA4 = {
-        x: 100,
-        y: 0
-    },
-    boxB3 = {
-        x: 80,
-        y: 20
-    },
-    boxB2 = {
-        x: 60,
-        y: 20
-    },
-    boxB4 = {
-        x: 100,
-        y: 20
-    }
-    
+	boxA4 = {
+		x: 100,
+		y: 0
+	},
+	boxB3 = {
+		x: 80,
+		y: 20
+	},
+	boxB2 = {
+		x: 60,
+		y: 20
+	},
+	boxB4 = {
+		x: 100,
+		y: 20
+	}
+	
 ]
 
 var square = [
 
-    boxA2 = {
-        x: 80,
-        y: 0
-    },
-    boxB3 = {
-        x: 100,
-        y: 20
-    },
-    boxA3 = {
-        x: 100,
-        y: 0
-    },
-    boxB2 = {
-        x: 80,
-        y: 20
-    }
+	boxA2 = {
+		x: 80,
+		y: 0
+	},
+	boxA3 = {
+		x: 100,
+		y: 0
+	},
+	boxB2 = {
+		x: 80,
+		y: 20
+	},
+	boxB3 = {
+		x: 100,
+		y: 20
+	}
 ]
 
 var S = [
 
-    boxA3 = {
-        x: 80,
-        y: 0
-    },
-    boxB3 = {
-        x: 80,
-        y: 20
-    },
-    boxA4 = {
-        x: 100,
-        y: 0
-    },
-    boxB2 = {
-        x: 60,
-        y: 20
-    }
+	boxA3 = {
+		x: 80,
+		y: 0
+	},
+	boxB3 = {
+		x: 80,
+		y: 20
+	},
+	boxA4 = {
+		x: 100,
+		y: 0
+	},
+	boxB2 = {
+		x: 60,
+		y: 20
+	}
 ]
 
 var T = [
 
-    boxA2 = {
-        x: 60,
-        y: 0
-    },
-    boxB3 = {
-        x: 80,
-        y: 20
-    },
-    boxA3 = {
-        x: 80,
-        y: 0
-    },
-    boxA4 = {
-        x: 100,
-        y: 0
-    }
+	boxA2 = {
+		x: 60,
+		y: 0
+	},
+	boxB3 = {
+		x: 80,
+		y: 20
+	},
+	boxA3 = {
+		x: 80,
+		y: 0
+	},
+	boxA4 = {
+		x: 100,
+		y: 0
+	}
 ]
 
 var Z = [
 
-    boxA2 = {
-        x: 60,
-        y: 0
-    },
-    boxB3 = {
-        x: 80,
-        y: 20
-    },
-    boxA3 = {
-        x: 80,
-        y: 0
-    },
-    boxB4 = {
-        x: 100,
-        y: 20
-    }
+	boxA2 = {
+		x: 60,
+		y: 0
+	},
+	boxB3 = {
+		x: 80,
+		y: 20
+	},
+	boxA3 = {
+		x: 80,
+		y: 0
+	},
+	boxB4 = {
+		x: 100,
+		y: 20
+	}
 ]
 
 var originals = {
@@ -823,5 +845,8 @@ var originals = {
 }
 
 startOver();
+startOver();
+
+
 
 
