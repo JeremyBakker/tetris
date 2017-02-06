@@ -1,0 +1,14 @@
+body {
+    height: 100%;
+    width: 100%
+}
+
+#canvasContainer {
+    width: 200px;
+    margin: 0 auto;
+    height: 440px;
+}
+
+#myCanvas {
+	border: 2px solid black;
+}
