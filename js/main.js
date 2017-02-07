@@ -7,6 +7,7 @@ var canvas = document.getElementById('myCanvas');
 var canvasPreview = document.getElementById("preview"); 
 var audioPlayer = document.getElementsByTagName("audio")[0];
 var isPlaying = true;
+var gamePaused = true;
 // in your HTML this element appears as <canvas id="mycanvas"></canvas>
 var ctx = canvas.getContext('2d');
 var ctxPreview = canvasPreview.getContext('2d');
@@ -133,13 +134,30 @@ function playGame() {
 		moveDown();
 		draw();
 		//moveGB();
+		bugCheck();
 		playGame();
 	}, waitTime);
+}
+
+function bugCheck() {
+	for (var i = 1; i < 11; i++) {
+		if (gameboard[3][i] === 1 || gameboard[3][i] === 2) {
+			console.log("its happenning");
+			debugger
+		}
+		if (gameboard[4][i] === 1 || gameboard[4][i] === 2) {
+			console.log("Bug is currently taking place");
+			debugger
+		}
+	}
 }
 
 document.addEventListener("keyup", function(event){
 	if (event.which === 40) {
 		// down arrow
+		if (gamePaused === true) {
+			return;
+		}
 		checkIfClearDown();
 		if (collisionDown === true){
 			return;
@@ -154,8 +172,11 @@ document.addEventListener("keyup", function(event){
 
 	if(event.which === 82) {
 		// r button
+		if (gamePaused === true) {
+			return;
+		}
 		if (whoseMove.string === "square") {
-        return;
+        	return;
     	}
 
 		if (moveCounter < 1) {
@@ -173,6 +194,9 @@ document.addEventListener("keyup", function(event){
 	}
 	if(event.which === 87) {
 		// w button
+		if (gamePaused === true) {
+			return;
+		}
 		if (whoseMove.string === "square") {
         return;
     	}
@@ -192,10 +216,16 @@ document.addEventListener("keyup", function(event){
 	}
 	if(event.which === 32) {
 		// space
+		if (gamePaused === true) {
+			return;
+		}
 		waitTime = 100;
 	}
 	if (event.which === 39) {
 		// right arrow
+		if (gamePaused === true) {
+			return;
+		}
 		checkIfClearRight();
 		if (collisionRight === true) {
 			return;
@@ -209,6 +239,9 @@ document.addEventListener("keyup", function(event){
 	}
 	if (event.which === 37) {
 		// left arrow
+		if (gamePaused === true) {
+			return;
+		}
 		checkIfClearLeft();
 		if (collisionLeft === true) {
 			return;
@@ -223,15 +256,16 @@ document.addEventListener("keyup", function(event){
 });
 
 playButton.addEventListener('click', function() {
+	gamePaused = false;
 	playGame();
 	playButton.disabled = true;
 	setTimeout(function(){
 		playButton.disabled = false;
-	}, 2000)
+	}, 500)
 })
 
 stopButton.addEventListener('click', function() {
-	togglePlay();
+	togglePlayMusic();
 	stopButton.disabled = true;
 	setTimeout(function(){
 		stopButton.disabled = false;
@@ -244,10 +278,11 @@ pauseButton.addEventListener('click', function() {
 		pauseButton.disabled = false;
 	}, 2000)
 	clearTimeout(myTimeout);
+	gamePaused = true;
 
 })
 
-function togglePlay() {
+function togglePlayMusic() {
     if (isPlaying) {
     audioPlayer.pause()
     isPlaying = false;
@@ -448,10 +483,14 @@ function checkIfClearRotateLeft() {
 
 function moveGB () {
 	for (var i = 3; i >= 0; i--) {
-		var xCoord = lastLetter[i].x
-		var yCoord = lastLetter[i].y
+		var xCoord = whoseMove.me[i].x;
+		var yCoord = whoseMove.me[i].y;
 	    xCoord = (xCoord/20) + 1;
 	    yCoord = (yCoord/20);
+	    if (yCoord === 4 || yCoord === 3 || yCoord === 2 || yCoord === 1) {
+	    	console.log("Caught you ya bastard");
+	    	debugger;
+	    };
 	    
 	    gameboard[yCoord][xCoord] = 1;
 	}
@@ -547,7 +586,7 @@ function letGBFall(rowNum) {
 		yCoordinates = (n - 1) * 20;
 		ctx.clearRect(0, yCoordinates, 200, h);
 	}
-	for (var i = rowNum; i > 0; i--) {
+	for (var i = rowNum; i > 1; i--) {
 		gameboard[i] = gameboard[i - 1];
 	} 
 }
