@@ -4,6 +4,7 @@
 
 body {
     position: relative;
+    background-color: lightgrey;
 }
 
 #tetris-game {
@@ -59,6 +60,18 @@ body {
 }
 
 #stop-button {
+    border: solid 2px black;
+    background-color: lightgrey;
+    border-radius: 5px;
+    /*width: 100px;*/
+    display: block;
+    margin: auto;
+    margin-top: 5px;
+    text-align: center;
+    font-size: 1em;
+}
+
+#pause-button {
     border: solid 2px black;
     background-color: lightgrey;
     border-radius: 5px;

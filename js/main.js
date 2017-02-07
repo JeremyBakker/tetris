@@ -2,8 +2,11 @@
 var scoreOutput = document.getElementById("scoreOutput");
 var playButton = document.getElementById("playButton");
 var stopButton = document.getElementById("stop-button");
+var pauseButton = document.getElementById("pause-button");
 var canvas = document.getElementById('myCanvas'); 
 var canvasPreview = document.getElementById("preview"); 
+var audioPlayer = document.getElementsByTagName("audio")[0];
+var isPlaying = true;
 // in your HTML this element appears as <canvas id="mycanvas"></canvas>
 var ctx = canvas.getContext('2d');
 var ctxPreview = canvasPreview.getContext('2d');
@@ -11,7 +14,9 @@ var h = 19;
 var w = 19;
 var score = 0;
 var clearedRowTotal = 0;
+var togglePauseCounter = 0;
 var waitTime = 500;
+var gameBegan = false;
 var letterColor = {
 	square: "red",
 	T: "blue",
@@ -99,19 +104,21 @@ function clearToMove() {
 }
 
 function playGame() {
-	if (moveCounter === 0) {
-			createGamePiece();
-			draw();
+	if (gameBegan === false) {
+		createGamePiece();
+		draw();
+		gameBegan = true;
 	}
 	myTimeout = setTimeout(function(){
 		clearedRowTotal = 0;
 		checkIfClearDown();
 		if (collisionDown === true && moveCounter < 2) {
-			alert("Game Over");
+			alert("Game Over. Your final score was " + score);
 			return;
 		}
 		if (collisionDown === true){
-			turn2sTo1s();
+			moveGB();
+			//turn2sTo1s();
 			checkIfRowIsFull();
 			resetLetter();
 			startOver();
@@ -121,11 +128,11 @@ function playGame() {
 			return;
 		}
 		moveCounter++;
-		clearBeforeMoveGB();
+		//clearBeforeMoveGB();
 		clearToMove();
 		moveDown();
 		draw();
-		moveGB();
+		//moveGB();
 		playGame();
 	}, waitTime);
 }
@@ -138,11 +145,11 @@ document.addEventListener("keyup", function(event){
 			return;
 		}
 		moveCounter++;
-		clearBeforeMoveGB();
+		//clearBeforeMoveGB();
 		clearToMove();
 		moveDown();
 		draw();
-		moveGB();
+		//moveGB();
 	}
 
 	if(event.which === 82) {
@@ -158,11 +165,11 @@ document.addEventListener("keyup", function(event){
 		if (collisionRotateRight === true) {
 			return;
 		}
-		clearBeforeMoveGB();
+		//clearBeforeMoveGB();
 		clearToMove();
 		rotateRight();
 		draw();
-		moveGB();
+		//moveGB();
 	}
 	if(event.which === 87) {
 		// w button
@@ -177,11 +184,11 @@ document.addEventListener("keyup", function(event){
 		if (collisionRotateLeft === true) {
 			return;
 		}
-		clearBeforeMoveGB();
+		//clearBeforeMoveGB();
 		clearToMove();
 		rotateLeft();
 		draw();
-		moveGB();
+		//moveGB();
 	}
 	if(event.which === 32) {
 		// space
@@ -193,11 +200,11 @@ document.addEventListener("keyup", function(event){
 		if (collisionRight === true) {
 			return;
 		} else {
-		clearBeforeMoveGB();
+		//clearBeforeMoveGB();
 		clearToMove();
 		moveRight();
 		draw();
-		moveGB();
+		//moveGB();
 		}
 	}
 	if (event.which === 37) {
@@ -206,11 +213,11 @@ document.addEventListener("keyup", function(event){
 		if (collisionLeft === true) {
 			return;
 		} else {
-		clearBeforeMoveGB();
+		//clearBeforeMoveGB();
 		clearToMove();
 		moveLeft();
 		draw();
-		moveGB();
+		//moveGB();
 		}
 	}
 });
@@ -218,16 +225,38 @@ document.addEventListener("keyup", function(event){
 playButton.addEventListener('click', function() {
 	playGame();
 	playButton.disabled = true;
+	setTimeout(function(){
+		playButton.disabled = false;
+	}, 2000)
 })
 
 stopButton.addEventListener('click', function() {
-	stop();
+	togglePlay();
+	stopButton.disabled = true;
+	setTimeout(function(){
+		stopButton.disabled = false;
+	}, 50)
 })
 
-function stop() {
-    var audioPlayer = document.getElementsByTagName("audio")[0];
-    audioPlayer.pause();
-    audioPlayer.currentTime = 0;
+pauseButton.addEventListener('click', function() {
+	pauseButton.disabled = true;
+	setTimeout(function(){
+		pauseButton.disabled = false;
+	}, 2000)
+	clearTimeout(myTimeout);
+
+})
+
+function togglePlay() {
+    if (isPlaying) {
+    audioPlayer.pause()
+    isPlaying = false;
+    stopButton.innerHTML = "UnMute!";
+  } else {
+    audioPlayer.play();
+    isPlaying = true;
+    stopButton.innerHTML = "Mute!";
+  }
 }
 
 function startOver() {
@@ -260,10 +289,9 @@ function startOver() {
 	} else if (randoNum >= 42 && randoNum <= 49) {
 		whoseMove2.me = Z;
 		whoseMove2.string = "Z";
-		whoseMove2.color = "pink";
+		whoseMove2.color = "brown";
 	}
 	moveCounter = 0;
-	waitTime = 500;
 }
 
 function resetLetter() {
@@ -407,16 +435,16 @@ function checkIfClearRotateLeft() {
 	}
 }
 
-function clearBeforeMoveGB() {
-	for (var i = 3; i >= 0; i--) {
-		var xCoord = lastLetter[i].x
-		var yCoord = lastLetter[i].y
-	    xCoord = (xCoord/20) + 1;
-	    yCoord = (yCoord/20);
+// function clearBeforeMoveGB() {
+// 	for (var i = 3; i >= 0; i--) {
+// 		var xCoord = lastLetter[i].x
+// 		var yCoord = lastLetter[i].y
+// 	    xCoord = (xCoord/20) + 1;
+// 	    yCoord = (yCoord/20);
 	    
-	    gameboard[yCoord][xCoord] = 0;
-	}
-}
+// 	    gameboard[yCoord][xCoord] = 0;
+// 	}
+// }
 
 function moveGB () {
 	for (var i = 3; i >= 0; i--) {
@@ -425,21 +453,26 @@ function moveGB () {
 	    xCoord = (xCoord/20) + 1;
 	    yCoord = (yCoord/20);
 	    
-	    gameboard[yCoord][xCoord] = 2;
+	    gameboard[yCoord][xCoord] = 1;
 	}
 }
 
-function turn2sTo1s() {
-	for (var i = 2; i < 22; i++) {
-		for (var n = 0; n < 12; n++) {
-			if (gameboard[i][n] === 2) {
-				gameboard[i][n] = 1;
-			}
-		}
-	}
-}
+// function turn2sTo1s() {
+// 	for (var i = 2; i < 22; i++) {
+// 		for (var n = 0; n < 12; n++) {
+// 			if (gameboard[i][n] === 2) {
+// 				gameboard[i][n] = 1;
+// 				if (i < 4) {
+// 					debugger
+// 					console.log("yAxis " + i + " xAxis " + n);
+// 				}
+// 			}
+// 		}
+// 	}
+// }
 
 function checkIfRowIsFull() {
+	waitTime = 500;
 	for (var i = 2; i < 22; i++) {
 		var fullRow = [];
 		for (var n = 0; n < 12; n++) {
@@ -450,9 +483,19 @@ function checkIfRowIsFull() {
 				clearedRowTotal++;
 				keepScore();
 				letGBFall(i);
-				console.log("row " + i + " is full");
 			}
 		}
+	}
+	if (score > 100) {
+		waitTime = 400;
+	}
+
+	if (score > 300) {
+		waitTime = 250;
+	}
+
+	if (score > 500) {
+		waitTime = 150;
 	}
 }
 
@@ -472,18 +515,6 @@ function keepScore() {
 	    score += 1200;
 	    score -= 300;
 	}
-
-	if (score === 250) {
-		myTimeout = 250;
-	}
-
-	if (score === 500) {
-		myTimeout = 125;
-	}
-
-	if (score === 750) {
-		myTimeout = 50;
-	}
 }
 
 function letGBFall(rowNum) {
@@ -495,19 +526,19 @@ function letGBFall(rowNum) {
 				var xCos = (p - 1) * 20;
 				var yCos = n * 20;
 				var randoNum = Math.floor((Math.random() * 49) + 1)
-				if (randoNum < 7) {
+				if (randoNum <= 7) {
 					ctx.fillStyle = "red";
-				} else if (randoNum >= 7 && randoNum < 14) {
+				} else if (randoNum > 7 && randoNum <= 14) {
 					ctx.fillStyle = "blue";
-				} else if (randoNum >= 14 && randoNum < 21) {
+				} else if (randoNum > 14 && randoNum <= 21) {
 					ctx.fillStyle = "yellow";
-				} else if (randoNum >= 21 && randoNum < 28) {
-					ctx.fillStyle = "pink";
-				} else if (randoNum >= 28 && randoNum < 35) {
+				} else if (randoNum > 21 && randoNum <= 28) {
+					ctx.fillStyle = "brown";
+				} else if (randoNum > 28 && randoNum <= 35) {
 					ctx.fillStyle = "green";
-				} else if (randoNum >= 35 && randoNum < 42) {
+				} else if (randoNum > 35 && randoNum <= 42) {
 					ctx.fillStyle = "orange";
-				} else if (randoNum >= 42 && randoNum <= 49) {
+				} else if (randoNum > 42 && randoNum <= 49) {
 					ctx.fillStyle = "cyan";
 				}
 				ctx.fillRect(xCos, yCos, w, h);
@@ -532,28 +563,6 @@ function createGamePiece() {
 	}
 	score += 4;
 	scoreOutput.innerHTML = score;
-	if (whoseMove.string === "square") {
-		gameboard[0] = originals.gameboardSquare[0];
-		gameboard[1] = originals.gameboardSquare[1];
-	} else if (whoseMove.string === "L") {
-		gameboard[0] = originals.gameboardL[0];
-		gameboard[1] = originals.gameboardL[1];
-	} else if (whoseMove.string === "J") {
-		gameboard[0] = originals.gameboardJ[0];
-		gameboard[1] = originals.gameboardJ[1];
-	} else if (whoseMove.string === "Z") {
-		gameboard[0] = originals.gameboardZ[0];
-		gameboard[1] = originals.gameboardZ[1];
-	} else if (whoseMove.string === "S") {
-		gameboard[0] = originals.gameboardZ[0];
-		gameboard[1] = originals.gameboardZ[1];
-	} else if (whoseMove.string === "I") {
-		gameboard[0] = originals.gameboardI[0];
-		gameboard[1] = originals.gameboardI[1];
-	} else if (whoseMove.string === "T") {
-		gameboard[0] = originals.gameboardT[0];
-		gameboard[1] = originals.gameboardT[1];
-	}
 }
 
 var gameboard = [
@@ -724,34 +733,6 @@ var Z = [
 ]
 
 var originals = {
-	gameboardSquare: [
-		[1,0,0,0,0,2,2,0,0,0,0,1],
-    	[1,0,0,0,0,2,2,0,0,0,0,1]
-	],
-	gameboardI: [
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,2,2,2,2,0,0,0,1]
-	],
-	gameboardL: [
-		[1,0,0,0,0,0,2,0,0,0,0,1],
-    	[1,0,0,0,2,2,2,0,0,0,0,1]
-	],
-	gameboardJ: [
-		[1,0,0,0,2,2,2,0,0,0,0,1],
-    	[1,0,0,0,0,0,2,0,0,0,0,1]
-	],
-	gameboardS: [
-		[1,0,0,0,0,2,2,0,0,0,0,1],
-    	[1,0,0,0,2,2,0,0,0,0,0,1]
-	],
-	gameboardZ: [
-		[1,0,0,0,2,2,0,0,0,0,0,1],
-    	[1,0,0,0,0,2,2,0,0,0,0,1]
-	],
-	gameboardT: [
-		[1,0,0,0,2,2,2,0,0,0,0,1],
-    	[1,0,0,0,0,2,0,0,0,0,0,1]
-	],
 	square: [
 		boxA2 = {
 			x: 80,
