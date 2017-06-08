@@ -5,7 +5,7 @@ Tetris Clone is a replica of the well known video game [Tetris](https://en.wikip
 ## Table of Contents
 
 - [Background](#background)
-- [Installation](#installation)
+- [Installation](#install-tetris)
 - [Usage](#usage)
 - [Maintainers](#maintainers)
 - [License](#license)
@@ -22,7 +22,7 @@ Second, I want to highlight the difficulty that a lack of organization can cause
 
 Finally, I want to demonstrate my growth as a developer. This project represented the height of my skills in February of 2017. I could turn an abstract idea into a concrete phenomenon and churn out the code to match. But I was not yet a software developer. I hope my colleagues can now say otherwise.
 
-## Installation of Lem(m)a
+## Install Tetris
 ```
 $ git clone https://github.com/JeremyBakker/tetris.git
 $ cd tetris
