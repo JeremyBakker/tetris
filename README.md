@@ -12,7 +12,7 @@ Tetris Clone is a replica of the well known video game [Tetris](https://en.wikip
 
 ## Background
 
-[Adam Myers](https://github.com/ANMyers) and I built the application during the frontend portion of our course at [Nashville Software School](http://nashvillesoftwareschool.com/). The assignment was a group challenge in the curriculum that no group in previous cohorts had yet to complete. We did. And as you can see in the code, it was a wild process. We built it over a weekend and left a code base that is unruly and sparsely commented. But the game works, which was the goal of the challenge.
+[Adam Myers](https://github.com/ANMyers) and I built this application during the frontend portion of our course at [Nashville Software School](http://nashvillesoftwareschool.com/). The assignment was a group challenge in the curriculum that no group in previous cohorts had yet to complete. We did. And as you can see in the code, it was a wild process. We built it over a weekend and left a code base that is unruly and sparsely commented. But the game works, which was the goal of the challenge.
 
 I leave this code on my GitHub profile as a memorial. 
 
