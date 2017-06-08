@@ -40,7 +40,7 @@ Press the space bar to move the piece into position quickly.
 Rows disappear as they are completed.
 The game is over when the block stack reaches the top.
 
-## Maintainer
+## Maintainers
 
 [Jeremy Bakker](https://github.com/JeremyBakker)
 
