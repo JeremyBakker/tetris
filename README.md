@@ -32,6 +32,8 @@ $ cd tetris
 
 Start a server, then open your favorite internet browser and go to your [Local Host - port: 8080](http://localhost:8080/)
 
+![image](https://user-images.githubusercontent.com/24864800/26941384-e7cf9224-4c43-11e7-8534-fd6dc9767292.png)
+
 Start the game.
 Move the blocks left, right, or down with the arrow keys.
 Rotate the pieces with the w or r keys.
