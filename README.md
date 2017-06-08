@@ -43,6 +43,7 @@ The game is over when the block stack reaches the top.
 ## Maintainer
 
 [Jeremy Bakker](https://github.com/JeremyBakker)
+
 [Adam Myers](https://github.com/ANMyers)
 
 ## License
