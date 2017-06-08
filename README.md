@@ -30,7 +30,7 @@ $ cd tetris
 
 ## Usage
 
-Start a server, then open your favorite internet browser and go to your [Local Host - port: 8000](http://localhost:8000/)
+Start a server, then open your favorite internet browser and go to your [Local Host - port: 8080](http://localhost:8080/)
 
 Start the game.
 Move the blocks left, right, or down with the arrow keys.
