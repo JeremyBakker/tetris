@@ -20,7 +20,7 @@ First, I want to recognize the motivation that comes in a challenge and the wisd
 
 Second, I want to highlight the difficulty that a lack of organization can cause for others. [Taylor Perkins](https://github.com/taylorperkins) also contributed to the project. But Adam and I looped him in after we had already moved pretty far into the project. Because neither Adam nor I had the skills at the time to plan our application, we could never fully involve Taylor. Nonetheless, his code is the most organized of the bunch, that which takes the 800-line JavaScript monster that Adam and I created, and breaks it out into intelligible units with [IIFEs](http://benalman.com/news/2010/11/immediately-invoked-function-expression/). He has a genius all his own, and the project would have been much more successful had Adam and I been capable of thinking beyond our excitement at the possibility of completing a challenge none of our predecessors had. 
 
-Finally, I want to demonstrate my growth as a developer. This project represented the height of my skills in February of 2016. I could turn an abstract idea into a concrete phenomenon and churn out the code to match. But I was not yet a software developer. I hope my colleagues can now say otherwise.
+Finally, I want to demonstrate my growth as a developer. This project represented the height of my skills in February of 2017. I could turn an abstract idea into a concrete phenomenon and churn out the code to match. But I was not yet a software developer. I hope my colleagues can now say otherwise.
 
 ## Installation of Lem(m)a
 ```
