@@ -1,6 +1,6 @@
 # Tetris Clone
 
-Tetris Clone is a replica of the well known video game [Tetris](https://en.wikipedia.org/wiki/Tetris). Built using HTML, CSS, and vanilla JavaScript, it mimics the original game in standard web browsers. 
+This Tetris clone replicates the well known video game [Tetris](https://en.wikipedia.org/wiki/Tetris). Built using HTML, CSS, and vanilla JavaScript, it mimics the original game in standard web browsers. 
 
 ## Table of Contents
 
